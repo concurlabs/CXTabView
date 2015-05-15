@@ -19,8 +19,8 @@
     
     self.tabView.delegate = self;
     
-    self.tabView.durationStartString = @"Apr 1, 2015";
-    self.tabView.durationEndString = @"Apr 2, 2015";
+    self.tabView.durationStartString = @"Thu, Dec 5";
+    self.tabView.durationEndString = @"Fri, Dec 7";
 }
 
 - (void)tabView:(CXTabView *)tabView didSelectMode:(CXTabViewMode)mode {
