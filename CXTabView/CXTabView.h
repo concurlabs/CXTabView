@@ -42,5 +42,6 @@ typedef NS_ENUM(NSUInteger, CXTabViewMode) {
 @property (strong, nonatomic) UIColor *durationValueForegroundColor;
 @property (strong, nonatomic) NSString *durationEndString;
 @property (strong, nonatomic) NSString *durationStartString;
+@property (nonatomic) CXTabViewMode mode;
 
 @end

@@ -34,4 +34,12 @@
     }
 }
 
+- (IBAction)didSetStartMode:(id)sender {
+    self.tabView.mode = CXTabViewModeStart;
+}
+
+- (IBAction)didSetEndMode:(id)sender {
+    self.tabView.mode = CXTabViewModeEnd;
+}
+
 @end

@@ -12,7 +12,7 @@
 
 @interface ViewController : UIViewController <CXTabViewDelegate>
 
-@property (strong, nonatomic) IBOutlet CXTabView *tabView;
+@property (weak, nonatomic) IBOutlet CXTabView *tabView;
 
 @end
 

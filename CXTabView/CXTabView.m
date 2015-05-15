@@ -338,20 +338,12 @@
 
 #pragma mark - Gesture recognizers
 
-- (IBAction)didTapStart:(id)sender {
-    [self moveIndicatorToStart];
-    
-    if ([self.delegate respondsToSelector:@selector(tabView:didSelectMode:)]) {
-        [self.delegate tabView:self didSelectMode:CXTabViewModeStart];
-    }
+- (void)didTapStart:(id)sender {
+    [self setStartMode];
 }
 
-- (IBAction)didTapEnd:(id)sender {
-    [self moveIndicatorToEnd];
-    
-    if ([self.delegate respondsToSelector:@selector(tabView:didSelectMode:)]) {
-        [self.delegate tabView:self didSelectMode:CXTabViewModeEnd];
-    }
+- (void)didTapEnd:(id)sender {
+    [self setEndMode];
 }
 
 #pragma mark - Utilities
@@ -366,6 +358,22 @@
     return half;
 }
 
+- (void)setEndMode {
+    [self moveIndicatorToEnd];
+    
+    if ([self.delegate respondsToSelector:@selector(tabView:didSelectMode:)]) {
+        [self.delegate tabView:self didSelectMode:CXTabViewModeEnd];
+    }
+}
+
+- (void)setStartMode {
+    [self moveIndicatorToStart];
+    
+    if ([self.delegate respondsToSelector:@selector(tabView:didSelectMode:)]) {
+        [self.delegate tabView:self didSelectMode:CXTabViewModeStart];
+    }
+}
+
 #pragma mark - API
 
 - (void)setDurationEndString:(NSString *)durationEndString {
@@ -374,6 +382,17 @@
 
 - (void)setDurationStartString:(NSString *)durationStartString {
     self.durationStartValue.text = durationStartString;
+}
+
+- (void)setMode:(CXTabViewMode)mode {
+    switch (mode) {
+        case CXTabViewModeStart:
+            [self setStartMode];
+            break;
+        case CXTabViewModeEnd:
+            [self setEndMode];
+            break;
+    }
 }
 
 @end
