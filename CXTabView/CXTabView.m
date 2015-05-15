@@ -118,7 +118,6 @@
     self.durationEndLabel.textAlignment = NSTextAlignmentCenter;
     self.durationEndLabel.textColor = self.durationLabelForegroundColor;
     self.durationEndLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
-    self.durationEndLabel.userInteractionEnabled = YES;
 
     [self addSubview:self.durationEndLabel];
     
@@ -132,7 +131,6 @@
     self.durationStartLabel.textAlignment = NSTextAlignmentCenter;
     self.durationStartLabel.textColor = self.durationLabelForegroundColor;
     self.durationStartLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
-    self.durationStartLabel.userInteractionEnabled = YES;
     
     [self addSubview:self.durationStartLabel];
     
