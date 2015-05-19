@@ -374,12 +374,28 @@
 
 #pragma mark - API
 
-- (void)setDurationEndString:(NSString *)durationEndString {
-    self.durationEndValue.text = durationEndString;
+- (void)setDurationLabelEndString:(NSString *)str {
+    self.durationEndLabel.text = str;
 }
 
-- (void)setDurationStartString:(NSString *)durationStartString {
-    self.durationStartValue.text = durationStartString;
+- (void)setDurationLabelStartString:(NSString *)str {
+    self.durationStartLabel.text = str;
+}
+
+- (void)setDurationValueEndString:(NSString *)str {
+    self.durationEndValue.text = str;
+}
+
+- (void)setDurationValueStartString:(NSString *)str {
+    self.durationStartValue.text = str;
+}
+
+- (void)setDurationEndString:(NSString *)str {
+    self.durationEndValue.text = str;
+}
+
+- (void)setDurationStartString:(NSString *)str {
+    self.durationStartValue.text = str;
 }
 
 - (void)setMode:(CXTabViewMode)mode {
