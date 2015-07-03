@@ -11,7 +11,7 @@ A very-specific light-weight component for toggling between a start date and end
 #### Podfile
 ```ruby
 platform :ios, '7.0'
-pod 'CXTabView', "~> 0.2.0"
+pod 'CXTabView', "~> 0.3.0"
 ```
 
 ## Collaboration
