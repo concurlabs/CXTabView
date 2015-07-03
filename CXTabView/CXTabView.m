@@ -384,18 +384,22 @@
 
 - (void)setDurationValueEndString:(NSString *)str {
     self.durationEndValue.text = str;
+    [self layoutDurationEndValue];
 }
 
 - (void)setDurationValueStartString:(NSString *)str {
     self.durationStartValue.text = str;
+    [self layoutDurationStartValue];
 }
 
 - (void)setDurationEndString:(NSString *)str {
     self.durationEndValue.text = str;
+    [self layoutDurationEndValue];
 }
 
 - (void)setDurationStartString:(NSString *)str {
     self.durationStartValue.text = str;
+    [self layoutDurationStartValue];
 }
 
 - (void)setMode:(CXTabViewMode)mode {
