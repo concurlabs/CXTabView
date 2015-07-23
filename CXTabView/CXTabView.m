@@ -213,10 +213,10 @@
     
     CGRect origFrame = self.durationEndValue.frame;
     
-    CGFloat xOffset = self.durationEndLabel.frame.origin.x;
+    CGFloat xOffset = (self.durationEndContainer.bounds.size.width - origFrame.size.width) / 2;
     CGFloat yOffset = self.durationEndLabel.frame.origin.y + 20;
     
-    CGRect newFrame = CGRectMake(xOffset, yOffset,
+    CGRect newFrame = CGRectMake(self.durationEndContainer.frame.origin.x + xOffset, yOffset,
                                  origFrame.size.width, origFrame.size.height);
     
     self.durationEndValue.frame = newFrame;
@@ -248,10 +248,10 @@
     
     CGRect origFrame = self.durationStartValue.frame;
     
-    CGFloat xOffset = self.durationStartLabel.frame.origin.x;
+    CGFloat xOffset = (self.durationStartContainer.bounds.size.width - origFrame.size.width) / 2;
     CGFloat yOffset = self.durationStartLabel.frame.origin.y + 20;
     
-    CGRect newFrame = CGRectMake(xOffset, yOffset,
+    CGRect newFrame = CGRectMake(self.durationStartContainer.frame.origin.x + xOffset, yOffset,
                                  origFrame.size.width, origFrame.size.height);
     
     self.durationStartValue.frame = newFrame;
