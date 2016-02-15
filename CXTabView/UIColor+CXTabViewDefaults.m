@@ -14,12 +14,20 @@
  * limitations under the License.
  */
 
-#import <UIKit/UIKit.h>
+#import "UIColor+CXTabViewDefaults.h"
 
-@interface UIColor (Defaults)
+@implementation UIColor (Defaults)
 
-+ (UIColor *)defaultBackgroundColor;
-+ (UIColor *)defaultDurationLabelForegroundColor;
-+ (UIColor *)defaultDurationValueForegroundColor;
++ (UIColor *)defaultBackgroundColor {
+    return [UIColor colorWithRed:0/255.0 green:120/255.0 blue:200/255.0 alpha:1];
+}
+
++ (UIColor *)defaultDurationLabelForegroundColor {
+    return [UIColor colorWithWhite:1 alpha:0.5];
+}
+
++ (UIColor *)defaultDurationValueForegroundColor {
+    return [UIColor colorWithWhite:1 alpha:1];
+}
 
 @end

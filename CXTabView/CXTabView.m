@@ -16,7 +16,7 @@
 
 #import "CXTabIndicatorView.h"
 #import "CXTabView.h"
-#import "UIColor+Defaults.h"
+#import "UIColor+CXTabViewDefaults.h"
 
 @interface CXTabView ()
 @property (strong, nonatomic) UIView *durationStartContainer;
@@ -139,6 +139,8 @@
 
 - (void)setupDurationEndValue {
     self.durationEndValue = [UILabel new];
+    self.durationEndValue.accessibilityIdentifier = @"durationEndValueLabel";
+    
     self.durationEndValue.text = @"";
     self.durationEndValue.textAlignment = NSTextAlignmentCenter;
     self.durationEndValue.textColor = self.durationValueForegroundColor;
@@ -151,6 +153,7 @@
 
 - (void)setupDurationStartValue {
     self.durationStartValue = [UILabel new];
+    self.durationStartValue.accessibilityIdentifier = @"durationStartValueLabel";
     
     self.durationStartValue.text = @"";
     self.durationStartValue.textAlignment = NSTextAlignmentCenter;

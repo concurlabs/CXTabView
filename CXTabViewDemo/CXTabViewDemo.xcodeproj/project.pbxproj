@@ -16,7 +16,7 @@
 		01ED76191B029FDA0007D30A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01ED76171B029FDA0007D30A /* LaunchScreen.xib */; };
 		01ED76251B029FDB0007D30A /* CXTabViewDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 01ED76241B029FDB0007D30A /* CXTabViewDemoTests.m */; };
 		01ED76321B02A0740007D30A /* CXTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 01ED76301B02A0740007D30A /* CXTabView.m */; };
-		01ED76361B02B46C0007D30A /* UIColor+Defaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 01ED76351B02B46C0007D30A /* UIColor+Defaults.m */; };
+		D63813B01C7231CB006C09A8 /* UIColor+CXTabViewDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = D63813AF1C7231CB006C09A8 /* UIColor+CXTabViewDefaults.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,8 +47,8 @@
 		01ED76241B029FDB0007D30A /* CXTabViewDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CXTabViewDemoTests.m; sourceTree = "<group>"; };
 		01ED762F1B02A0740007D30A /* CXTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CXTabView.h; sourceTree = "<group>"; };
 		01ED76301B02A0740007D30A /* CXTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CXTabView.m; sourceTree = "<group>"; };
-		01ED76341B02B46C0007D30A /* UIColor+Defaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Defaults.h"; sourceTree = "<group>"; };
-		01ED76351B02B46C0007D30A /* UIColor+Defaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Defaults.m"; sourceTree = "<group>"; };
+		D63813AE1C7231CB006C09A8 /* UIColor+CXTabViewDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+CXTabViewDefaults.h"; sourceTree = "<group>"; };
+		D63813AF1C7231CB006C09A8 /* UIColor+CXTabViewDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+CXTabViewDefaults.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,8 +136,8 @@
 				01CD88BF1B05642F0024CC0B /* CXTabIndicatorView.m */,
 				01ED762F1B02A0740007D30A /* CXTabView.h */,
 				01ED76301B02A0740007D30A /* CXTabView.m */,
-				01ED76341B02B46C0007D30A /* UIColor+Defaults.h */,
-				01ED76351B02B46C0007D30A /* UIColor+Defaults.m */,
+				D63813AE1C7231CB006C09A8 /* UIColor+CXTabViewDefaults.h */,
+				D63813AF1C7231CB006C09A8 /* UIColor+CXTabViewDefaults.m */,
 			);
 			name = CXTabView;
 			path = ../../CXTabView;
@@ -244,11 +244,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				01ED76321B02A0740007D30A /* CXTabView.m in Sources */,
-				01ED76361B02B46C0007D30A /* UIColor+Defaults.m in Sources */,
 				01ED76111B029FDA0007D30A /* ViewController.m in Sources */,
 				01CD88C01B05642F0024CC0B /* CXTabIndicatorView.m in Sources */,
 				01ED760E1B029FDA0007D30A /* AppDelegate.m in Sources */,
 				01ED760B1B029FDA0007D30A /* main.m in Sources */,
+				D63813B01C7231CB006C09A8 /* UIColor+CXTabViewDefaults.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
