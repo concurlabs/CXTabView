@@ -18,4 +18,6 @@
 
 @interface CXTabIndicatorView : UIView
 
+@property (strong, nonatomic) UIColor *activeTabTintColor;
+
 @end

@@ -30,6 +30,8 @@ typedef NS_ENUM(NSUInteger, CXTabViewMode) {
 @optional
 
 - (void)tabView:(CXTabView *)tabView didSelectMode:(CXTabViewMode)mode;
+- (BOOL)tabView:(CXTabView *)tabView shouldSelectMode:(CXTabViewMode)mode;
+
 
 @end
 
@@ -40,6 +42,8 @@ typedef NS_ENUM(NSUInteger, CXTabViewMode) {
 @property (strong, nonatomic) UIColor *durationEndForegroundColor;
 @property (strong, nonatomic) UIColor *durationLabelForegroundColor;
 @property (strong, nonatomic) UIColor *durationValueForegroundColor;
+@property (strong, nonatomic) UIColor *tabBackgroundColor;
+@property (strong, nonatomic) UIColor *activeTabTintColor;
 
 @property (strong, nonatomic) NSString *durationLabelEndString;
 @property (strong, nonatomic) NSString *durationLabelStartString;
@@ -51,5 +55,7 @@ typedef NS_ENUM(NSUInteger, CXTabViewMode) {
 @property (strong, nonatomic) NSString *durationStartString __attribute__((deprecated));
 
 @property (nonatomic) CXTabViewMode mode;
+@property (nonatomic, getter=isSeparatorHidden) BOOL hideSeparator;
+@property (nonatomic, getter=isEndTabHidden) BOOL hideEndTab;
 
 @end

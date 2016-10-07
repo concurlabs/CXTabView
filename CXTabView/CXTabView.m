@@ -68,20 +68,20 @@
     self.indicatorIndex = 0;
     
     self.backgroundColor = [UIColor defaultBackgroundColor];
+    
     self.durationLabelForegroundColor = [UIColor defaultDurationLabelForegroundColor];
     self.durationValueForegroundColor = [UIColor defaultDurationValueForegroundColor];
     
     [self setupDurationContainers];
-    
+    [self setupIndicator];
     [self setupDurationStartLabel];
     [self setupDurationEndLabel];
     
     [self setupDurationStartValue];
     [self setupDurationEndValue];
     
-    [self setupIndicator];
-    
     [self setupSeparator];
+    [self setStartMode:YES];
 }
 
 - (void)setupDurationContainers {
@@ -166,10 +166,8 @@
 }
 
 - (void)setupIndicator {
-    self.indicator = [CXTabIndicatorView new];
-    
+    self.indicator = [[CXTabIndicatorView alloc] initWithFrame:self.durationStartContainer.frame];
     [self addSubview:self.indicator];
-    
     [self layoutIndicator];
 }
 
@@ -261,30 +259,7 @@
 }
 
 - (void)layoutIndicator {
-    CGFloat indicatorWidth = 14;
-    CGFloat indicatorHeight = 8;
-    
-    UIView *containerView;
-    
-    if (self.indicatorIndex == 0) {
-        containerView = self.durationStartContainer;
-    } else {
-        containerView = self.durationEndContainer;
-    }
-    
-    CGRect rect = containerView.bounds;
-    
-    CGFloat halfBoundsWidth = rect.size.width / 2;
-    CGFloat halfIndicatorWidth = indicatorWidth / 2;
-    
-    CGFloat xOffset = (rect.size.width * self.indicatorIndex) + halfBoundsWidth - halfIndicatorWidth;
-    CGFloat yOffset = containerView.bounds.size.height;
-    CGFloat width = indicatorWidth;
-    CGFloat height = indicatorHeight;
-    
-    CGRect indicatorFrame = CGRectMake(xOffset, yOffset, width, height);
-    
-    self.indicator.frame = indicatorFrame;
+    self.indicator.frame = (self.indicatorIndex == 0) ? self.durationStartContainer.frame : self.durationEndContainer.frame;
 }
 
 - (void)layoutSeparator {
@@ -312,26 +287,22 @@
         return;
     }
     
-    CGPoint newCenter = CGPointMake(self.durationEndContainer.center.x,
-                                    self.indicator.center.y);
+    CGRect frame = self.durationEndContainer.frame;
     
     [UIView animateWithDuration:0.25 animations:^{
-        self.indicator.center = newCenter;
+        self.indicator.frame = frame;
     }];
     
     self.indicatorIndex = 1;
+    self.hideEndTab = NO;
 }
 
 - (void)moveIndicatorToStart {
-    if (self.indicatorIndex == 0) {
-        return;
-    }
     
-    CGPoint newCenter = CGPointMake(self.durationStartContainer.center.x,
-                                    self.indicator.center.y);
+    CGRect frame = self.durationStartContainer.frame;
     
     [UIView animateWithDuration:0.25 animations:^{
-        self.indicator.center = newCenter;
+        self.indicator.frame = frame;
     }];
     
     self.indicatorIndex = 0;
@@ -340,11 +311,11 @@
 #pragma mark - Gesture recognizers
 
 - (void)didTapStart:(id)sender {
-    [self setStartMode];
+    [self setStartMode:YES];
 }
 
 - (void)didTapEnd:(id)sender {
-    [self setEndMode];
+    [self setEndMode:YES];
 }
 
 #pragma mark - Utilities
@@ -359,22 +330,44 @@
     return half;
 }
 
-- (void)setEndMode {
-    [self moveIndicatorToEnd];
+- (void)setEndMode:(BOOL)askDelegate {
+    if (askDelegate && [self.delegate respondsToSelector:@selector(tabView:shouldSelectMode:)]) {
+        if ([self.delegate tabView:self shouldSelectMode:CXTabViewModeEnd]) {
+            [self setEndModeAndNotify];
+        }
+    } else {
+        [self setEndModeAndNotify];
+    }
+    
+}
+
+- (void)setEndModeAndNotify {
     
     if ([self.delegate respondsToSelector:@selector(tabView:didSelectMode:)]) {
         [self.delegate tabView:self didSelectMode:CXTabViewModeEnd];
     }
+    
+    [self moveIndicatorToEnd];
 }
 
-- (void)setStartMode {
-    [self moveIndicatorToStart];
+- (void)setStartMode:(BOOL)askDelegate {
+    if (askDelegate && [self.delegate respondsToSelector:@selector(tabView:shouldSelectMode:)]) {
+        if ([self.delegate tabView:self shouldSelectMode:CXTabViewModeStart]) {
+            [self setStartModeAndNotify];
+        }
+    } else {
+        [self setStartModeAndNotify];
+    }
+}
+
+- (void)setStartModeAndNotify {
     
     if ([self.delegate respondsToSelector:@selector(tabView:didSelectMode:)]) {
         [self.delegate tabView:self didSelectMode:CXTabViewModeStart];
     }
+    
+    [self moveIndicatorToStart];
 }
-
 #pragma mark - API
 
 - (void)setDurationLabelEndString:(NSString *)str {
@@ -386,6 +379,10 @@
 }
 
 - (void)setDurationValueEndString:(NSString *)str {
+    
+    if (str == nil) { // allow empty strings but not nils
+        return;
+    }
     self.durationEndValue.text = str;
     [self layoutDurationEndValue];
 }
@@ -408,12 +405,37 @@
 - (void)setMode:(CXTabViewMode)mode {
     switch (mode) {
         case CXTabViewModeStart:
-            [self setStartMode];
+            [self setStartMode:NO];
             break;
         case CXTabViewModeEnd:
-            [self setEndMode];
+            [self setEndMode:NO];
             break;
     }
 }
+- (void)setHideSeparator:(BOOL)hideSeparator {
+    self.separator.hidden = hideSeparator;
+}
 
+- (BOOL)isSeparatorHidden {
+    return self.separator.isHidden;
+}
+
+- (void)setHideEndTab:(BOOL)hideEndTab {
+    self.durationEndValue.hidden = hideEndTab;
+    self.durationEndLabel.hidden = hideEndTab;
+}
+
+- (BOOL)isEndTabHidden {
+    return self.durationEndLabel.hidden;
+}
+
+- (void)setTabBackgroundColor:(UIColor *)tabBackgroundColor {
+    _tabBackgroundColor = tabBackgroundColor;
+    self.backgroundColor = tabBackgroundColor;
+}
+
+-(void)setActiveTabTintColor:(UIColor *)activeTabTintColor {
+    _activeTabTintColor = activeTabTintColor;
+    self.indicator.activeTabTintColor = activeTabTintColor;
+}
 @end
