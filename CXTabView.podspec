@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
   s.license                 = "MIT"
   s.authors                 = { "Richard Puckett" => "richard.puckett@concur.com" }
   s.source                  = { :git => 'https://github.com/concurlabs/CXTabView.git', :tag => s.version }
-  s.ios.deployment_target   = "7.0"
+  s.ios.deployment_target   = "9.0"
   s.source_files            = "CXTabView"
   s.requires_arc            = true
 end
