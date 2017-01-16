@@ -8,5 +8,6 @@ Pod::Spec.new do |s|
   s.source                  = { :git => 'https://github.com/concurlabs/CXTabView.git', :tag => s.version }
   s.ios.deployment_target   = "7.0"
   s.source_files            = "CXTabView"
+  s.resources               = ["Resources/*.png"]
   s.requires_arc            = true
 end

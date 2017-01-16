@@ -45,8 +45,9 @@ typedef NS_ENUM(NSUInteger, CXTabViewMode) {
 @property (strong, nonatomic) UIColor *tabBackgroundColor;
 @property (strong, nonatomic) UIColor *activeTabTintColor;
 
-@property (strong, nonatomic) NSString *durationLabelEndString;
+@property (strong, nonatomic) UIImage *calendarIcon;
 @property (strong, nonatomic) NSString *durationLabelStartString;
+@property (strong, nonatomic) NSString *durationLabelEndString;
 
 @property (strong, nonatomic) NSString *durationValueEndString;
 @property (strong, nonatomic) NSString *durationValueStartString;

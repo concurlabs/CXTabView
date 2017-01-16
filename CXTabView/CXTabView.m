@@ -21,6 +21,7 @@
 @interface CXTabView ()
 @property (strong, nonatomic) UIView *durationStartContainer;
 @property (strong, nonatomic) UIView *durationEndContainer;
+@property (strong, nonatomic) UIImageView *calendarIconView;
 @property (strong, nonatomic) UILabel *durationStartLabel;
 @property (strong, nonatomic) UILabel *durationStartValue;
 @property (strong, nonatomic) UILabel *durationEndLabel;
@@ -115,7 +116,7 @@
     self.durationEndLabel = [UILabel new];
 
     self.durationEndLabel.text = @"Check-out Date";
-    self.durationEndLabel.textAlignment = NSTextAlignmentCenter;
+    self.durationEndLabel.textAlignment = NSTextAlignmentLeft;
     self.durationEndLabel.textColor = self.durationLabelForegroundColor;
     self.durationEndLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
 
@@ -127,11 +128,27 @@
 - (void)setupDurationStartLabel {
     self.durationStartLabel = [UILabel new];
     
+    self.calendarIconView = [[UIImageView alloc] init];
+    self.calendarIconView.tintColor = [UIColor whiteColor];
+    if (self.calendarIcon) {
+        self.calendarIconView.image = self.calendarIcon;
+    } else {
+        UIImage *icon = [UIImage imageNamed:@"icon_calendar_grey" inBundle:[NSBundle bundleForClass:self.class] compatibleWithTraitCollection:nil];
+        icon = [icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        self.calendarIconView.image = icon;
+    }
+    
+    
+    CGRect imageFrame = self.calendarIconView.frame;
+    imageFrame.size = CGSizeMake(15, 15);
+    self.calendarIconView.frame = imageFrame;
+    
     self.durationStartLabel.text = @"Check-in Date";
-    self.durationStartLabel.textAlignment = NSTextAlignmentCenter;
+    self.durationStartLabel.textAlignment = NSTextAlignmentLeft;
     self.durationStartLabel.textColor = self.durationLabelForegroundColor;
     self.durationStartLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
     
+    [self addSubview:self.calendarIconView];
     [self addSubview:self.durationStartLabel];
     
     [self layoutDurationStartLabel];
@@ -142,7 +159,7 @@
     self.durationEndValue.accessibilityIdentifier = @"durationEndValueLabel";
     
     self.durationEndValue.text = @"";
-    self.durationEndValue.textAlignment = NSTextAlignmentCenter;
+    self.durationEndValue.textAlignment = NSTextAlignmentLeft;
     self.durationEndValue.textColor = self.durationValueForegroundColor;
     self.durationEndValue.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
     
@@ -156,7 +173,7 @@
     self.durationStartValue.accessibilityIdentifier = @"durationStartValueLabel";
     
     self.durationStartValue.text = @"";
-    self.durationStartValue.textAlignment = NSTextAlignmentCenter;
+    self.durationStartValue.textAlignment = NSTextAlignmentLeft;
     self.durationStartValue.textColor = self.durationValueForegroundColor;
     self.durationStartValue.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
     
@@ -179,6 +196,7 @@
     [self addSubview:self.separator];
     
     [self layoutSeparator];
+
 }
 
 #pragma mark - Element layout
@@ -200,11 +218,12 @@
     
     CGRect origFrame = self.durationEndLabel.frame;
     
-    CGFloat xOffset = (self.durationEndContainer.bounds.size.width - origFrame.size.width) / 2;
+    CGFloat xOffset = self.durationEndContainer.frame.origin.x + 40;
     CGFloat yOffset = 10;
     
-    CGRect newFrame = CGRectMake(self.durationEndContainer.frame.origin.x + xOffset, yOffset,
-                                 origFrame.size.width, origFrame.size.height);
+    CGRect newFrame = CGRectMake(xOffset, yOffset,
+                                 self.durationEndContainer.frame.size.width - (20),
+                                 origFrame.size.height);
     
     self.durationEndLabel.frame = newFrame;
 }
@@ -214,11 +233,11 @@
     
     CGRect origFrame = self.durationEndValue.frame;
     
-    CGFloat xOffset = (self.durationEndContainer.bounds.size.width - origFrame.size.width) / 2;
+    CGFloat xOffset = self.durationEndLabel.frame.origin.x;
     CGFloat yOffset = self.durationEndLabel.frame.origin.y + 20;
     
-    CGRect newFrame = CGRectMake(self.durationEndContainer.frame.origin.x + xOffset, yOffset,
-                                 origFrame.size.width, origFrame.size.height);
+    CGRect newFrame = CGRectMake(xOffset, yOffset,
+                                 self.durationEndLabel.frame.size.width, self.durationEndLabel.frame.size.height);
     
     self.durationEndValue.frame = newFrame;
 }
@@ -233,15 +252,23 @@
 - (void)layoutDurationStartLabel {
     [self.durationStartLabel sizeToFit];
     
+    CGRect imageFrame = self.calendarIconView.frame;
     CGRect origFrame = self.durationStartLabel.frame;
     
-    CGFloat xOffset = (self.durationStartContainer.bounds.size.width - origFrame.size.width) / 2;
-    CGFloat yOffset = 10;
+    CGSize collectiveSize = CGSizeMake(imageFrame.size.width + 10 + origFrame.size.width,
+                                       imageFrame.size.height);
     
-    CGRect newFrame = CGRectMake(self.durationStartContainer.frame.origin.x + xOffset, yOffset,
-                                 origFrame.size.width, origFrame.size.height);
+    CGFloat xOffset = 20, yOffset = 10, trailingOffset = 10, separation = 10;
     
-    self.durationStartLabel.frame = newFrame;
+    CGRect newImageFrame = CGRectMake(xOffset, yOffset, imageFrame.size.width, imageFrame.size.height);
+    CGFloat labelOffset = xOffset + imageFrame.size.width + separation;
+    
+    CGRect newLabelFrame = CGRectMake(labelOffset, yOffset, self.durationStartContainer.frame.size.width - trailingOffset - labelOffset, self.durationStartLabel.frame.size.height);
+    
+    
+    
+    self.calendarIconView.frame = newImageFrame;
+    self.durationStartLabel.frame = newLabelFrame;
 }
 
 - (void)layoutDurationStartValue {
@@ -249,11 +276,11 @@
     
     CGRect origFrame = self.durationStartValue.frame;
     
-    CGFloat xOffset = (self.durationStartContainer.bounds.size.width - origFrame.size.width) / 2;
+    CGFloat xOffset = self.durationStartLabel.frame.origin.x;
     CGFloat yOffset = self.durationStartLabel.frame.origin.y + 20;
     
-    CGRect newFrame = CGRectMake(self.durationStartContainer.frame.origin.x + xOffset, yOffset,
-                                 origFrame.size.width, origFrame.size.height);
+    CGRect newFrame = CGRectMake(xOffset, yOffset,
+                                 self.durationStartContainer.frame.size.width - xOffset - 10, origFrame.size.height);
     
     self.durationStartValue.frame = newFrame;
 }
