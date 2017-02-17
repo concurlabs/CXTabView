@@ -448,8 +448,11 @@
 }
 
 - (void)setHideEndTab:(BOOL)hideEndTab {
+    
     self.durationEndValue.hidden = hideEndTab;
     self.durationEndLabel.hidden = hideEndTab;
+    
+    self.tabBackgroundColor = self.tabBackgroundColor;
 }
 
 - (BOOL)isEndTabHidden {
@@ -458,7 +461,11 @@
 
 - (void)setTabBackgroundColor:(UIColor *)tabBackgroundColor {
     _tabBackgroundColor = tabBackgroundColor;
-    self.backgroundColor = tabBackgroundColor;
+    if ([self isEndTabHidden]) {
+        self.backgroundColor = self.activeTabTintColor;
+    } else {
+        self.backgroundColor = tabBackgroundColor;
+    }
 }
 
 -(void)setActiveTabTintColor:(UIColor *)activeTabTintColor {
