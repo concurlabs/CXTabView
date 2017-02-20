@@ -271,8 +271,8 @@
     CGRect origFrame = self.durationStartLabel.frame;
     
     if (self.calendarIcon) {
-        CGSize collectiveSize = CGSizeMake(imageFrame.size.width + 10 + origFrame.size.width,
-                                           imageFrame.size.height);
+        //CGSize collectiveSize = CGSizeMake(imageFrame.size.width + 10 + origFrame.size.width,
+        //                                   imageFrame.size.height);
         
         CGFloat xOffset = 20, yOffset = 10, trailingOffset = 10, separation = 10;
         
