@@ -120,7 +120,9 @@
     
     [self.background removeFromSuperlayer];
     [self.blip removeFromSuperlayer];
-    [self setNeedsLayout];
+    
+    self.background = nil;
+    self.blip = nil;
 }
 
 @end

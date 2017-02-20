@@ -21,6 +21,7 @@
 @interface CXTabView ()
 @property (strong, nonatomic) UIView *durationStartContainer;
 @property (strong, nonatomic) UIView *durationEndContainer;
+@property (strong, nonatomic) UIImageView *calendarIconView;
 @property (strong, nonatomic) UILabel *durationStartLabel;
 @property (strong, nonatomic) UILabel *durationStartValue;
 @property (strong, nonatomic) UILabel *durationEndLabel;
@@ -127,11 +128,22 @@
 - (void)setupDurationStartLabel {
     self.durationStartLabel = [UILabel new];
     
+    self.calendarIconView = [[UIImageView alloc] init];
+    self.calendarIconView.tintColor = [UIColor whiteColor];
+    if (self.calendarIcon) {
+        self.calendarIconView.image = self.calendarIcon;
+    }
+    
+    CGRect imageFrame = self.calendarIconView.frame;
+    imageFrame.size = CGSizeMake(15, 15);
+    self.calendarIconView.frame = imageFrame;
+    
     self.durationStartLabel.text = @"Check-in Date";
     self.durationStartLabel.textAlignment = NSTextAlignmentCenter;
     self.durationStartLabel.textColor = self.durationLabelForegroundColor;
     self.durationStartLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:14];
     
+    [self addSubview:self.calendarIconView];
     [self addSubview:self.durationStartLabel];
     
     [self layoutDurationStartLabel];
@@ -179,6 +191,7 @@
     [self addSubview:self.separator];
     
     [self layoutSeparator];
+
 }
 
 #pragma mark - Element layout
@@ -200,11 +213,20 @@
     
     CGRect origFrame = self.durationEndLabel.frame;
     
-    CGFloat xOffset = (self.durationEndContainer.bounds.size.width - origFrame.size.width) / 2;
     CGFloat yOffset = 10;
     
-    CGRect newFrame = CGRectMake(self.durationEndContainer.frame.origin.x + xOffset, yOffset,
+    CGRect newFrame;
+    if (self.calendarIcon) {
+        CGFloat xOffset = self.durationEndContainer.frame.origin.x + 40;
+        newFrame = CGRectMake(xOffset, yOffset,
+                                     self.durationEndContainer.frame.size.width - (20),
+                                     origFrame.size.height);
+    } else {
+        CGFloat xOffset = (self.durationEndContainer.bounds.size.width - origFrame.size.width) / 2;
+        newFrame = CGRectMake(self.durationEndContainer.frame.origin.x + xOffset, yOffset,
                                  origFrame.size.width, origFrame.size.height);
+    }
+    
     
     self.durationEndLabel.frame = newFrame;
 }
@@ -214,11 +236,23 @@
     
     CGRect origFrame = self.durationEndValue.frame;
     
-    CGFloat xOffset = (self.durationEndContainer.bounds.size.width - origFrame.size.width) / 2;
     CGFloat yOffset = self.durationEndLabel.frame.origin.y + 20;
     
-    CGRect newFrame = CGRectMake(self.durationEndContainer.frame.origin.x + xOffset, yOffset,
+    CGRect newFrame;
+    if (self.calendarIcon) {
+        CGFloat xOffset = self.durationEndLabel.frame.origin.x;
+        newFrame = CGRectMake(xOffset, yOffset,
+                                     self.durationEndLabel.frame.size.width,
+                                     self.durationEndLabel.frame.size.height);
+    } else {
+        CGFloat xOffset = (self.durationEndContainer.bounds.size.width - origFrame.size.width) / 2;
+    
+    
+    
+        newFrame = CGRectMake(self.durationEndContainer.frame.origin.x + xOffset, yOffset,
                                  origFrame.size.width, origFrame.size.height);
+    }
+    
     
     self.durationEndValue.frame = newFrame;
 }
@@ -233,33 +267,59 @@
 - (void)layoutDurationStartLabel {
     [self.durationStartLabel sizeToFit];
     
+    CGRect imageFrame = self.calendarIconView.frame;
     CGRect origFrame = self.durationStartLabel.frame;
     
-    CGFloat xOffset = (self.durationStartContainer.bounds.size.width - origFrame.size.width) / 2;
-    CGFloat yOffset = 10;
-    
-    CGRect newFrame = CGRectMake(self.durationStartContainer.frame.origin.x + xOffset, yOffset,
-                                 origFrame.size.width, origFrame.size.height);
-    
-    self.durationStartLabel.frame = newFrame;
+    if (self.calendarIcon) {
+        CGSize collectiveSize = CGSizeMake(imageFrame.size.width + 10 + origFrame.size.width,
+                                           imageFrame.size.height);
+        
+        CGFloat xOffset = 20, yOffset = 10, trailingOffset = 10, separation = 10;
+        
+        CGRect newImageFrame = CGRectMake(xOffset, yOffset, imageFrame.size.width, imageFrame.size.height);
+        CGFloat labelOffset = xOffset + imageFrame.size.width + separation;
+        
+        CGRect newLabelFrame = CGRectMake(labelOffset, yOffset, self.durationStartContainer.frame.size.width - trailingOffset - labelOffset, self.durationStartLabel.frame.size.height);
+        self.calendarIconView.frame = newImageFrame;
+        self.durationStartLabel.frame = newLabelFrame;
+    } else {
+        CGFloat xOffset = (self.durationStartContainer.bounds.size.width - origFrame.size.width) / 2;
+        CGFloat yOffset = 10;
+        CGRect newFrame = CGRectMake(self.durationStartContainer.frame.origin.x + xOffset, yOffset,
+                                     origFrame.size.width, origFrame.size.height);
+        self.durationStartLabel.frame = newFrame;
+    }
 }
 
 - (void)layoutDurationStartValue {
     [self.durationStartValue sizeToFit];
     
     CGRect origFrame = self.durationStartValue.frame;
-    
-    CGFloat xOffset = (self.durationStartContainer.bounds.size.width - origFrame.size.width) / 2;
     CGFloat yOffset = self.durationStartLabel.frame.origin.y + 20;
     
-    CGRect newFrame = CGRectMake(self.durationStartContainer.frame.origin.x + xOffset, yOffset,
-                                 origFrame.size.width, origFrame.size.height);
+    CGRect newFrame;
     
+    if (self.calendarIcon) {
+        CGFloat xOffset = self.durationStartLabel.frame.origin.x;
+        
+        newFrame = CGRectMake(xOffset, yOffset,
+                                     self.durationStartContainer.frame.size.width - xOffset - 10, origFrame.size.height);
+        
+    } else {
+        CGFloat xOffset = (self.durationStartContainer.bounds.size.width - origFrame.size.width) / 2;
+        newFrame = CGRectMake(self.durationStartContainer.frame.origin.x + xOffset, yOffset,
+                                     origFrame.size.width, origFrame.size.height);
+    }
     self.durationStartValue.frame = newFrame;
+        
 }
 
 - (void)layoutIndicator {
-    self.indicator.frame = (self.indicatorIndex == 0) ? self.durationStartContainer.frame : self.durationEndContainer.frame;
+    CGRect frame = (self.indicatorIndex == 0) ? self.durationStartContainer.frame : self.durationEndContainer.frame;
+    if (CGRectEqualToRect(self.indicator.frame, frame)) { return; }
+    
+    self.indicator.frame = frame;
+    self.indicator.activeTabTintColor = _activeTabTintColor;
 }
 
 - (void)layoutSeparator {
@@ -421,8 +481,11 @@
 }
 
 - (void)setHideEndTab:(BOOL)hideEndTab {
+    
     self.durationEndValue.hidden = hideEndTab;
     self.durationEndLabel.hidden = hideEndTab;
+    
+    self.tabBackgroundColor = self.tabBackgroundColor;
 }
 
 - (BOOL)isEndTabHidden {
@@ -431,11 +494,40 @@
 
 - (void)setTabBackgroundColor:(UIColor *)tabBackgroundColor {
     _tabBackgroundColor = tabBackgroundColor;
-    self.backgroundColor = tabBackgroundColor;
+    if ([self isEndTabHidden]) {
+        self.backgroundColor = self.activeTabTintColor;
+    } else {
+        self.backgroundColor = tabBackgroundColor;
+    }
 }
 
 -(void)setActiveTabTintColor:(UIColor *)activeTabTintColor {
     _activeTabTintColor = activeTabTintColor;
     self.indicator.activeTabTintColor = activeTabTintColor;
+}
+    
+- (void)setCalendarIcon:(UIImage *)calendarIcon {
+    
+    
+    NSTextAlignment alignment = NSTextAlignmentCenter;
+    
+    if (_calendarIcon == calendarIcon) { return; }
+
+    _calendarIcon = calendarIcon;
+    
+    if (_calendarIcon) {
+        self.calendarIconView.image = _calendarIcon;
+        alignment = NSTextAlignmentLeft;
+    }
+    
+    self.durationStartLabel.textAlignment = alignment;
+    self.durationStartValue.textAlignment = alignment;
+    self.durationEndLabel.textAlignment = alignment;
+    self.durationEndValue.textAlignment = alignment;
+    
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
+    
+    
 }
 @end
