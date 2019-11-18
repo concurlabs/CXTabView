@@ -527,7 +527,13 @@
     
     [self setNeedsLayout];
     [self layoutIfNeeded];
-    
-    
 }
+
+- (void)setCalendarIcon:(UIImage *)calendarIcon withAlpha:(double)alpha  {
+    if (calendarIcon) {
+        self.calendarIcon = calendarIcon;
+        self.calendarIconView.alpha = alpha;
+    }
+}
+
 @end

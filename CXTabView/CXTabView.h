@@ -59,4 +59,6 @@ typedef NS_ENUM(NSUInteger, CXTabViewMode) {
 @property (nonatomic, getter=isSeparatorHidden) BOOL hideSeparator;
 @property (nonatomic, getter=isEndTabHidden) BOOL hideEndTab;
 
+- (void)setCalendarIcon:(UIImage *)calendarIcon withAlpha:(double)alpha;
+
 @end
