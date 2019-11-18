@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                    = "CXTabView"
-  s.version                 = "0.3.5"
+  s.version                 = "0.3.6"
   s.summary                 = "A light-weight component for switching between two modes."
   s.homepage                = "https://github.com/concurlabs/CXTabView"
   s.license                 = "MIT"
